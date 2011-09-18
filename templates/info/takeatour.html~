@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+<body>
+  {% block content %}
+  Check back to find out more
+  {% endblock %}
+</body>

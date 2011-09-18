@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block headextra %}
+   <style type="text/css">
+
+   span.bannerbig {
+     width:20%;
+     vertical-align:middle;
+     float:left;
+     text-align:center;
+     padding-top:2px;
+   }
+
+   span.bannersmall {
+     width:20%;
+     text-align:center;
+     float:left;
+     padding-top:2px;
+   }
+
+   #topcontent {
+     background-color:#7EAC31;
+     height:55px;
+     text-align:middle;
+   }
+
+   table {
+     table-layout: fixed;
+     border-collapse: collapse;
+     width: 100%;
+   }
+
+   </style>
+{% endblock %}
+
+<body>
+{% block topcontent %}
+   <span class="bannerbig">Current Campaign:</span>
+   <span class="bannerbig"><img src="{{MEDIA_URL}}img/charitywater.jpg"></span>
+   <span class="bannersmall">Impact: Clean water for 20 years for one person.</span>
+   <span class="bannerbig">Progress: 80%
+       <img src="{{MEDIA_URL}}img/progress_bar_test.jpg" >
+       </span> 
+   <span class="bannersmall">Days Remaining: 8 days young.</span>   
+{% endblock %}
+
+{% block leftcontent %}
+   <h2>Check It Out</h2>
+      <hr />
+   <table class=noborders>
+     <tr>
+       <td>Cool Causes</td>
+       <td>Popular Downsizes</td>
+     </tr>
+     <tr>
+       <td>Cause Logo</td>
+       <td>Popular Downsizes Image</td>
+     </tr>
+   </table>
+   <h2>Active Crew</h2>
+      <hr />
+   <table class=noborders>
+     <tr>
+       <td colspan=2>Search Box</td>
+       <td>Search Link</td>
+       <td></td>
+       <td></td>
+     </tr>
+     <tr>
+       <td> <img src="{{MEDIA_URL}}img/avatar1.jpg" width="70" height="70"></td>
+       <td> <img src="{{MEDIA_URL}}img/avatar2.png" width="70" height="70"></td>
+       <td><img src="{{MEDIA_URL}}img/avatar3.jpg" width="70" height="70"></td>
+       <td><img src="{{MEDIA_URL}}img/avatar1.jpg" width="70" height="70"></td>
+       <td><img src="{{MEDIA_URL}}img/avatar2.png" width="70" height="70"></td>
+     </tr>
+     <tr>
+       <td colspan=3>Start Something</td>
+       <td colspan=2>Invite Friends to DS</td>
+     </tr>
+   </table>
+   <h2>Trophy Case</h2>
+      <hr />
+   <table class=noborders>
+     <tr>
+       <td>Trophy 1</td>
+       <td>Trophy 2</td>
+       </tr>
+   </table>
+{% endblock %}
+
+{% block rightcontent %}
+   <h2>My Stats</h2> 
+      <hr />
+   <a href="../newgoal/">New Goal</a>
+   <table class=standard>
+     <tr>
+       <th>Queue Order</th>
+       <th>Charity</th>
+       <th width="50px">Group</th>
+       <th width="40px">Days</th>
+       <th>Impact</th>
+       <th>Current Savings</th>
+       <th>Progress</th>
+       <th>Move to Top</th>
+       <th>Move Up</th>
+       <th>Move Down</th>
+     </tr>
+     {% for goal in goal_list %}
+     <tr>
+       <td>{{ goal.queue_order }}</td>
+       <td><a href="../summary/{{ goal.id }}/">{{ goal.charity.charity_name }}</a></td>
+       <td></td>
+       <td></td>
+       <td>{{ goal.charity.impact }}</td>
+       <td><span class="num_dollar">{{ goal.current_savings }}</ span></td>
+       <td><span class="num_percent">{{ goal.progress }}</span></td>
+       <td><a href="../movetotop/{{ goal.id }}/">Move to Top</a></td>
+       <td><a href="../moveup/{{ goal.id }}/">Move Up</a></td>
+       <td><a href="../movedown/{{ goald.id }}">Move Down</a></td>
+     </tr>
+     {% endfor %}
+   </table>
+
+   <h2>Recent Downsizes</h2>
+      <hr />
+   <a href="../downsize/">Downsize Now</a>
+   <table class=standard>
+     <tr>
+       <th>What</th>
+       <th>When</th>
+       <th>Amount</th>
+       <th>Edit</th>
+       <th>Delete</th>
+     </tr>
+     {% for downsize in recent_downsize_list %}
+     <tr>
+       <td>{{ downsize.saving }}</td>
+       <td>{{ downsize.downsize_date }}</td>
+       <td>{{ downsize.downsize_amount }}</td>
+       <td><a href="../downsize/edit/{{ downsize.id }}/">Edit</a></td>
+       <td><a href="../downsize/delete/{{ downsize.id }}/">Delete</a></td>
+     </tr>
+     {% endfor %}
+   </table>
+{% endblock %}
+</body>

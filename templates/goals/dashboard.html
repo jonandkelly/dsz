@@ -1,0 +1,720 @@
+{% extends "base.html" %}
+
+{% block headextra %}
+   <title>Downsize - Dashboard</title>
+   
+   <style type="text/css">
+	
+	/* workaround to highlight active menu item*/
+	ul#nav li.dashmenu a {
+		color: #7CB126;
+		background-color: #EEE;
+	}
+ 
+	#topcontent { text-align: left;	}
+	   
+	#spotlight { 
+		clear: left;
+		float: left;
+		padding: 10px 0; 
+		height: 140px;
+		width: 600px;
+		margin-top: 0px;
+		margin-bottom: 20px;
+	}
+   
+	#spotlightheader {
+		float: left;
+		padding-bottom: 0;
+	}
+	
+	#spotlightheader h1 {
+		color: black;
+		text-align: left;
+        text-transform: none;
+		padding-right: 20px;
+		padding-left: 0px;
+		margin-bottom: 0;
+		font-size: 100%;
+		font-weight: normal;
+		border: none;
+		color: #555;
+	}	
+	
+	#spotlightbelowheader {
+		clear: left;
+		border: 1px dashed #BBB;
+		height: 110px;
+        padding: 10px;
+        position: relative;
+	}	
+   
+	#spotlightlogo {
+		float: left;
+		width: 150px;
+		height: 75px;
+        margin: 10px 10px 0 0;		
+	}
+    
+    #spotlightlogo a:hover {
+        border: none;
+    }
+   
+	#spotlightdesc {
+		float: left;
+		width: 400px;
+		height: 70px;
+		padding-left: 0px;
+		padding-top: 0px;
+		margin-top: 10px;
+	}
+    
+    .impactperks {
+        font-weight: normal;
+        color: black;
+    }
+   
+	#spotlightdesc p {
+		margin: 0 0 10px 0;
+		font-weight: bold;
+        line-height: 1em;
+	}
+	#score {
+		float: right;
+		min-width: 140px;
+		font-size: 0.75em;
+		padding-right: 50px;
+	}
+   
+	#scorebox {
+		margin: 30px 20px 10px 0;
+		border: 1px solid;
+		background-color: #CCC;
+		min-width: 110px;
+        min-height: 90px;
+		text-align: center;
+		padding: 40px 5px 0px 5px;
+	}
+	
+	#scorebox #scorenum {
+		font-size: 500%;
+		font-weight: bold;
+	}
+	
+	#scorebox #status {
+		font-size: 1.5em;
+		font-weight: bold;
+		font-style: italic;
+        line-height: 2em;
+	}
+	
+	#current {
+		text-align: left;
+		clear: both;
+		padding: 10px 0;
+		margin-bottom: 30px;
+	}
+   
+	#currentheader {
+		float: left;
+		width: 100%;
+	}
+		
+	#streak { 
+		font-style: italic; 
+        font-weight: normal;
+		font-size: 50%;
+		margin-left: 10px;
+		color: black;
+        text-transform: none;
+	}
+    
+    #currentcontainer {
+        clear: left;
+        width: 100%;
+        height: 80px;
+        margin-bottom: 20px;
+        background-color: #CBEC97;
+    }
+   
+	.currentlogo {
+		clear: left;
+		float: left;
+		margin-left: 10px;
+		padding-top: 10px;
+		width: 300px;
+	}
+   
+	.currentdesc {
+		float: left;
+		width: 300px;
+		height: 50px;
+		padding: 15px 20px 0 20px;
+		font-weight: bold;
+		margin-right: 20px;
+	}
+	
+	.currentdesc p {
+		font-size: 100%;
+		padding-top: 0;
+		margin: 0;
+	}
+		
+	.currentprogress { 
+		padding: 15px 10px 0px 0px;
+		text-align: left;
+		width: 235px;
+		float: left;
+	}
+	
+	.currentprogress p { 
+		padding: 0;
+		margin: 0;
+	}
+	
+	.moredollars { 
+		font-weight: bold;
+		padding-right: 0px;
+		float: right;
+	}
+    
+    #readytoclear {
+        clear: left;
+        border: 1px solid;
+        padding: 10px 0;
+        background-color: #F60;
+        margin-bottom: 5px;
+    }
+    
+    .clearprompt p {
+        font-style: italic;
+    }
+    
+    .clearlink {
+        font-size: 150%;
+        text-decoration: none;
+        font-weight: bold;
+        background-color: white;
+        color: #F60;
+        padding: 4px 30px;
+        margin-left: 60px;
+        margin-bottom: 10px;
+    }
+    
+    a.clearlink {
+        color: #F60;
+        border: none;
+    }
+    
+	#leftcontent {
+		width: 400px;
+	}
+	
+	#middlecontent {
+		width: 250px;
+	}
+	
+	#rightcontent {
+		width: 250px;
+	}
+        
+    #mycharities {
+        position: relative;
+    }
+
+	table {
+		table-layout: fixed;
+		border-collapse: collapse;
+		width: 100%;
+	}
+	
+	.noheader th { display: none; }
+	
+	ol { 
+		list-style-type: none;
+		/* padding and margins set to 0 as a hack to make  bottom border of bottom list item appear */
+		padding-bottom: 0;
+		margin-bottom: 0;
+	}
+	
+	.charitylist, .downsizelist { 
+		margin-left: 0; 
+		padding-left: 0;
+	}
+    
+    .downsizelist {
+        margin-top: 50px;
+    }
+	
+	.badge {
+		float: left;
+		margin-right: 10px;
+		height: 75px;
+	}
+	
+	.badgesmall {
+		float: left;
+		margin-right: 10px;
+		height: 35px;
+	}
+	
+	.nameimpact {
+		float: left;
+		width: 250px;
+		height: 75px;
+		font-weight: bold;
+	}
+	
+	.nameimpact a { text-decoration: none; }
+	
+	.downsizelist .right, .charitylist .right {
+		float: right;
+		width: 60px;
+        padding-top: 5px;
+		height: 75px;
+		text-align: right;
+	}
+	
+	.downsizelist .right p, .charitylist .right p  { 
+		margin: 0;
+		padding: 0;
+	}
+	
+	.smalllink { 
+		font-size: 75%; 
+		line-height: 1.5em;
+	}
+	
+	#nextup, #recentwins { 
+		clear: left;
+        float: left;
+		padding: 0 auto;
+		margin: 0 auto;
+	}
+	
+	#nextup h2, #recentwins h2 {
+		padding: 0 auto 5px;
+		margin: 0 auto 9px;
+	}
+    
+    #recentwins h2 { 
+		padding-top: 25px;
+		margin-top: 0;
+	}
+	
+    #newgoallink {
+        float: left;
+		padding-top: 3px;
+		padding-left: 10px;
+	}
+	
+	.charitylist li { 
+		clear: left;
+		height: 75px; 
+		margin: 0;
+		padding: 5px 0;
+		border-top: 1px solid #EEE;
+	}
+	
+	/* turns off appearance of these items in the list of charities */
+	.num_dollar, .num_percent, .charitylist.groupcampaign { display: none; }
+	
+	.givedate, .groupcampaign {
+		font-style: italic;
+		font-weight: bold;
+		font-size: 75%;
+		color: #888;
+	}
+	
+	p.groupcampaign { padding-top: 3em; }
+	
+	hr#linehack { 
+		margin-top: 0;
+		color: transparent;
+		border-bottom: 1px solid #EEE;
+	}
+    
+    #downsize {
+        position: relative;
+    }
+	
+	.badgesmall {
+		float: left;
+		margin-right: 10px;
+		height: 35px;
+	}
+	
+	#dsdetails {
+		float: left;
+		width: 165px;
+		height: 35px;
+		font-weight: bold;
+	}
+	
+	.dsitem, .dsdate, .dsdollar {
+		font-size: 75%;
+		color: #888;
+		line-height: 1.1em;
+		padding: 0;
+		margin: 0;
+	}	
+	
+	.downsizelist .right {
+		width: 35px;
+		float: right;
+		height: 35px;
+		text-align: right;
+		font-size: 75%;
+        line-height: 1.5em;
+        padding-top: 0;
+	}
+	
+	.downsizelist li { 
+		clear: left;
+		height: 35px; 
+		margin: 0;
+		padding: 5px 0;
+		border-top: 1px solid #EEE;
+	}
+	
+	.trophyname {
+		clear: left;
+		font-size: 75%;
+	}
+	
+	.trophylist, .crewlist { margin: 0; padding: 0;}
+	
+	.trophylist li {
+		float: left;
+		width: 75px;
+		margin-bottom: 5px;
+		margin-right: 5px;
+		padding: 5px 0;
+		text-align: center;
+	}
+	
+	.trophylist .trophypic { 
+		margin: 0 10px 5px;
+        float: left;
+	}
+    
+    #trophycase ul {
+        margin-bottom: 30px;
+        min-height: 100px;
+    }
+	
+	ul { list-style-type: none; }
+
+	#crew { clear: left; }	
+
+	.crewpic {
+		float: left;
+		clear: left;
+		margin-right: 5px;
+		height: 75px;
+		width: 75px;
+	}
+	
+	.crewdetails {
+		float: left;
+		width: 160px;
+		font-size: 75%;
+	}
+	
+	.crewdetails p {
+		margin: 0;
+		padding-top: 0px;
+	}
+
+	p.crewstatus { padding-top: 10px; }
+	
+	.crewdetails a { 
+		text-decoration: none;
+		font-weight: bold;
+	}
+    
+    a.newbutton {
+        background-color: #f60;
+        color: white;
+        font-weight: bold;
+        position: absolute;
+        border: none;
+        padding: 10px;
+    }
+     
+    a:hover.newbutton {
+        background-color: #ffa340;
+    }
+    
+    #spotlight a.newbutton {
+        bottom: 10px;
+        right: 10px;
+    }
+    
+    #mycharities a.newbutton, #downsize a.newbutton {
+        top: 50px;
+        right: 0px;
+        padding: 2px 5px;
+    }
+    
+    #learnmorelink {
+        width: 100px;
+        margin-top: 30px;
+    }
+	
+	/* hides mystats section */
+	#mystats { display: none; }	
+    		
+    </style>
+
+	 
+	 <!-- jsProgressBarHandler prerequisites : prototype.js -->
+	<script type="text/javascript" src="{{MEDIA_URL}}js/prototype.js"></script>
+
+	<!-- jsProgressBarHandler core -->
+
+	<script type="text/javascript" src="{{MEDIA_URL}}js/jsProgressBarHandler.js"></script>
+
+			{% endblock %}
+
+{% block topcontent %}
+	<div id="spotlight">
+		<div id="spotlightheader"><h1>In the Spotlight: <strong>{{ spotlight_charity }}</strong></h1></div>
+		<div id="spotlightbelowheader">
+			<div id="spotlightlogo">
+				<a href="{{ spotlight_charity.website }}" target="_blank" title=" {{ spotlight_charity }} "><img src="{{ spotlight_charity.image1 }}" alt="{{ spotlight_charity }} logo" width="150" height="90" /></a>
+			</div>
+			<div id="spotlightdesc">
+				<p><span class="impactperks">Impact:</span> {{ spotlight_charity.impact }}</p>
+				<p><span class="impactperks">Perks:</span> {{ spotlight_charity.perks }}<br /></p>
+				<div id="learnmorelink"><a href="{{ spotlight_charity.website }}" target="_blank">Learn More</a></div>
+				<a href="../../charities/addqueued/{{ spotlight_charity.id }}/" class="newbutton">Add to Roster</a>                
+			</div>
+		</div>
+	</div>
+	<div id="score">
+		<div id="scorebox">
+			<p><span id="scorenum"> {{ user.userprofile.ds_points }}</span>pts</p>
+			<p><span id="status"> {{ user.userprofile.baller_status }}</span></p>
+		</div>	
+	</div>   
+
+    <div id="current">
+        <div id="currentheader">
+            <h1>Current Progress<span id="streak"> 0 days young </span></h1>
+        </div>
+        <div id="currentcontainer">
+        {% if current_goal == None %}
+        <div class="currentlogo">
+            <img src="{{MEDIA_URL}}img/charity-water-logo.png" alt="Charity Water logo" width="275" height="50" />
+        </div>
+        <div class="currentdesc">
+            <p> None </p>
+        </div>
+        <div class="currentprogress">
+            <span class="progressBar" class="myElementId"> 0 </span>
+            <p><span class="moredollars"> $0 remaining </span></p>
+        </div>
+            {% else %}
+        <div class="currentlogo">
+            <img src="{{ current_goal.charity.logo }}" alt="logo" width="275" height="50" />
+        </div>
+        <div class="currentdesc">
+            <p> {{ current_goal.charity.impact }} </p>
+        </div>
+        <div class="currentprogress">
+            <span class="progressBar" class="myElementId"> {% widthratio  current_goal_progress 1 100 %} </span>
+            <p><span class="moredollars"> ${{ current_goal_remaining }} remaining </span></p>
+        </div>
+            {% endif %}
+        </div>
+        {% for completed_goal in completed_goal_list %}
+        <div id="readytoclear">
+            <div class="currentlogo">
+                <img src="{{ completed_goal.charity.logo }}" alt="{{ completed_goal.charity }}" width="275" height="50" />
+            </div>
+            <div class="currentdesc">
+                <p> {{ completed_goal.charity.impact }} </p>
+            </div>
+            <div class="clearprompt">
+                <p>Great work! Click Clear to complete.</p>
+            <!-- DUMMY PLACEHOLDER BUTTON BELOW -->
+                <a href="../cleargoal/{{ completed_goal.id }}" class="clearlink">Clear</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>	 	
+	{% endblock %}
+
+{% block leftcontent %}
+	<div id="mycharities">
+		<h1>Charity Roster</h1>
+		<div id="nextup"><h2>Next Up</h2></div>
+		<div id="newgoallink"><a href="../newgoal/" class="newbutton">Add One</a></div>
+		<ol class="charitylist">
+		{% for goal in queued_goal_list %}
+			<li>
+				<div class="badge">
+					<img src="{{ goal.charity.logo }}" alt="placeholder" width="75" height="75" />
+				</div>
+				<div class="nameimpact">
+					<a href="../summary/{{ goal.id }}/">{{  goal.charity.charity_name }}</a>
+					<p>{{ goal.charity.impact }}</p>
+				</div>
+				<div class="num_dollar">
+					{{ goal.current_savings }}
+				</div>
+				<div class="groupcampaign">
+				</div>
+				<div class="right">
+					<p><a href="../movetotop/{{ goal.id }}/" class="smalllink">Top</a></p>
+					<p><a href="../moveup/{{ goal.id }}/" class="smalllink">Up</a></p>
+					<p><a href="../movedown/{{ goal.id }}" class="smalllink">Down</a></p>
+					<p><a href="../deletegoal/{{ goal.id }}" class="smalllink">Delete</a></p>
+				</div>
+			</li>
+		{% endfor %}
+		</ol>
+        <!-- hack to make the bottom border appear -->
+		<hr id="linehack" />
+		<div id="recentwins"><h2>Recent Wins</h2></div>
+		<ol class="charitylist">
+			{% for goal in cleared_goal_list %}
+			<li>
+				<div class="badge">
+					<img src="{{ goal.charity.logo }}" alt="placeholder" width="75" height="75" />
+				</div>
+				<div class="nameimpact">
+					<a href="../summary/{{ goal.id }}/">{{ goal.charity.charity_name }}</a>
+					<p>{{ goal.charity.impact }}</p>
+				</div>
+				<div class="num_dollar">
+					{{ goal.current_savings }}
+				</div>
+				<div class="groupcampaign">
+				</div>
+				<div class="right">
+					<p class="givedate">2/23/10</p>
+					<p class="groupcampaign">Solo mission</p>
+				</div>
+			</li>
+		{% endfor %}
+		</ol>
+		<!-- hack to make the bottom border appear -->
+		<hr id="linehack" />
+	</div>
+   
+{% endblock %}
+
+{% block middlecontent %}
+<div id="downsize">
+<h1>Downsizes</h1>
+	<a href="../downsize/" class="newbutton">Add One</a>
+	<ol class="downsizelist">
+	{% for downsize in recent_downsize_list %}
+		<li>
+			<div class="badgesmall">
+				<img src="{{MEDIA_URL}}img/imageplaceholder35x35.jpg" alt="placeholder" width="35" height="35" />
+			</div>
+			<div id="dsdetails">
+				<p class="dsitem">{{ downsize.saving }}</p>
+				<p class="dsdate">{{ downsize.downsize_date }}</p>
+				<p class="dsdollar">{{ downsize.downsize_amount }}</p>
+			</div>
+			<div class="right">
+				<p><a href="../downsize/edit/{{ downsize.id }}/">Edit</a></p>
+				<p><a href="../downsize/delete/{{ downsize.id }}/">Delete</a></p>
+			</div>
+		</li>
+	{% endfor %}
+	</ol>
+	<!-- hack to make the bottom border appear -->
+	<hr id="linehack" />
+</div>
+{% endblock %}
+
+{% block rightcontent %}
+<div id="trophycase">
+<h1>Trophy Case</h1>
+	<ul class="trophylist">
+    {% for trophy in trophy_case %}
+		<li>
+			<div class="trophypic">
+				<img src="{{MEDIA_URL}}img/imageplaceholder55x55.jpg" alt="placeholder" width="55" height="55" />
+			</div>
+			<div class="trophyname">
+				<p>{{ trophy.award }}</p>
+			</div>
+		</li>
+    {% endfor %}
+	</ul>   
+</div>
+
+<div id="crew">
+<h1>Active Crew</h1>
+   <ul class="crewlist">
+		<li>
+			<div class="crewpic">
+				<img src="{{MEDIA_URL}}img/avatar1.jpg" alt="placeholder pic" width="70" height="70" />
+			</div>
+			<div class="crewdetails">
+				<a href="" class="crewname">Ali W.</a>
+				<p class="crewstatus">Downsized coffee for</p>
+				<p><a href="" class="crewcharity">Habitat for Humanity</a></p>
+			</div>
+		</li>
+		<li>
+			<div class="crewpic">
+				<img src="{{MEDIA_URL}}img/avatar2.png" alt="placeholder pic" width="70" height="70" />
+			</div>
+			<div class="crewdetails">
+				<a href="" class="crewname">Mikey N.</a>
+				<p class="crewstatus">Downsized cell phone plan for</p>
+				<p><a href="" class="crewcharity">Dartmouth College</a></p>
+			</div>			
+		</li>
+		<li>
+			<div class="crewpic">
+				<img src="{{MEDIA_URL}}img/avatar3.jpg" alt="placeholder pic" width="70" height="70" />
+			</div>
+			<div class="crewdetails">
+				<a href="" class="crewname">Johnny Cash</a>
+				<p class="crewstatus">Cleared a donation to</p>
+				<p><a href="" class="crewcharity">WWF</a></p>
+			</div>
+		</li>
+		<li>
+			<div class="crewpic">
+				<img src="{{MEDIA_URL}}img/avatar1.jpg" alt="placeholder pic" width="70" height="70" />
+			</div>
+			<div class="crewdetails">
+				<a href="" class="crewname">Petey B.</a>
+				<p class="crewstatus">Downsized a beer for</p>
+				<p><a href="" class="crewcharity">Princeton University</a></p>
+			</div>
+		</li>
+		<li>	
+			<div class="crewpic">
+				<img src="{{MEDIA_URL}}img/avatar2.png" alt="placeholder pic" width="70" height="70" />
+			</div>
+			<div class="crewdetails">
+				<a href="" class="crewname">Billy Y.</a>
+				<p class="crewstatus">Downsized his birthday for</p>
+				<p><a href="" class="crewcharity">Robin Hood</a></p>
+			</div>
+		</li>
+	</ul>
+</div>
+{% endblock %}   
+
+{% block bottomcontent %}
+<div id="mystats">   
+   <h1>My Stats</h1> 
+   <br />
+   <br />
+   <br />
+   <br />
+   <br />
+   <br />
+</div>
+{% endblock %}      

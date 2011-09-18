@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<h2>Downsize</h2>
+<form action="/goals/downsize/" method="post">
+{% csrf_token %}
+<a href="../newgoal/">Start a New Goal {{user.username}}</a>
+<a href="../newsaving/">Pick a New Type of Savings</a>
+{{ form.as_p }}
+<input type="submit" value="Downsize" />
+</form>
+
+{% endblock %}

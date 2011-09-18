@@ -1,0 +1,139 @@
+from django.shortcuts import render_to_response, get_object_or_404
+from django.template import RequestContext
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.db.models import Q
+from myproject.goals.models import Goal, Downsize, UpdateGoalFromDownsize, UpdateQueueOrder
+from myproject.goals.forms import GoalForm, DownsizeForm, SavingForm
+
+def index(request):
+    user = request.user
+    return render_to_response('goals/index.html', {'user': user,}, context_instance=RequestContext(request))
+
+def dashboard(request):
+    user = request.user
+    goal_list = Goal.objects.filter(user=user)[:10]
+    recent_downsize_list = Downsize.objects.all().order_by('-downsize_date')[:5]
+    try:
+        top_goal_progress = Goal.objects.get(user=user, queue_order=1).progress
+    except:
+        top_goal_progress = 0
+    return render_to_response('goals/dashboard.html', {'user': user, 'goal_list': goal_list, 'recent_downsize_list': recent_downsize_list, 'top_goal_progress': top_goal_progress}, context_instance=RequestContext(request))
+
+def newgoal(request):
+    user = request.user
+    if request.method == 'POST':
+        form = GoalForm(user, request.POST)
+        goal = form.save(commit=False)
+        goal.user = user
+        goal.save()
+        queued_goals_list = Goal.objects.exclude(progress=1)
+        num_queued = len(queued_goals_list)
+        goal.queue_order = num_queued
+        goal.save()
+        return HttpResponseRedirect('../dashboard')
+    else:
+        form = GoalForm(user)
+    return render_to_response('goals/newgoal.html', {'form': form, 'user': user}, context_instance=RequestContext(request))
+    
+def newsaving(request):
+    user = request.user
+    if request.method == 'POST':
+        form = SavingForm(request.POST)
+        form.save()
+        return HttpResponseRedirect('../downsize')
+    else:
+        form = SavingForm()
+    return render_to_response('goals/newsaving.html', {'form': form, 'user': user}, context_instance=RequestContext(request))
+
+def movetotop(request, goal_id):
+    user = request.user
+    goal_top = get_object_or_404(Goal, pk=goal_id)
+    current_position = goal_top.queue_order
+    adjust_queue_list = Goal.objects.filter(Q(user=user) & Q(queue_order__gt=0) & Q(queue_order__lt=current_position))
+    for goal_down in adjust_queue_list:
+        goal_down.queue_order += 1
+        goal_down.save()
+    goal_top.queue_order = 1
+    goal_top.save()
+    return HttpResponseRedirect('../../dashboard')
+
+def moveup(request, goal_id):
+    user = request.user
+    goal_up = get_object_or_404(Goal, pk=goal_id)
+    current_position = goal_up.queue_order
+    new_position = current_position - 1
+    goal_down = Goal.objects.get(user=user, queue_order=new_position)
+    goal_down.queue_order = current_position
+    goal_down.save()
+    goal_up.queue_order = new_position
+    goal_up.save()
+    return HttpResponseRedirect('../../dashboard')
+
+def movedown(request, goal_id):
+    user = request.user
+    goal_down = get_object_or_404(Goal, pk=goal_id)
+    current_position = goal_down.queue_order
+    new_position = goal_down.queue_order + 1
+    goal_up = Goal.objects.get(user=user, queue_order=new_position)
+    goal_up.queue_order = current_position
+    goal_up.save()
+    goal_down.queue_order = new_position
+    goal_down.save()
+    return HttpResponseRedirect('../../dashboard')
+
+def summary(request, goal_id):
+    user = request.user
+    goal = get_object_or_404(Goal, pk=goal_id)
+    return render_to_response('goals/summary.html', {'user': user, 'goal': goal}, context_instance=RequestContext(request))
+
+def downsize(request):
+    user = request.user
+    if request.method == 'POST':
+        form = DownsizeForm(request.POST)
+        downsize = form.save(commit=False)
+        num_goals_completed = 0
+        amount = downsize.downsize_amount
+        i = 1
+        while amount > 0:
+            goal = Goal.objects.get(user=user, queue_order=i)
+            downsize.save()
+            amount, num_goals_completed = UpdateGoalFromDownsize(goal, downsize, amount, num_goals_completed)
+            i += 1
+        if num_goals_completed > 0:
+            goal_list = Goal.objects.filter(user=user, queue_order__gt=0)
+            UpdateQueueOrder(goal_list, num_goals_completed)
+        return HttpResponseRedirect('../dashboard')
+    else:
+        form = DownsizeForm()
+    return render_to_response('goals/downsize.html', {'form': form, 'user': user}, context_instance=RequestContext(request))
+
+def editdownsize(request, downsize_id):
+    user = request.user
+    downsize = get_object_or_404(Downsize, pk=downsize_id)
+    old_downsize_amount = downsize.downsize_amount
+    if request.method == 'POST':
+        form = DownsizeForm(request.POST, instance=downsize)
+        downsize = form.save()
+        goal = downsize.goal
+        goal.current_savings += (downsize.downsize_amount - old_downsize_amount)
+        goal.progress = goal.current_savings / goal.savings_goal
+        goal.save()
+        return HttpResponseRedirect('../../../dashboard')
+    else:
+        form = DownsizeForm(instance=downsize)
+    return render_to_response('goals/editdownsize.html', {'form': form, 'user': user, 'downsize_id': downsize_id}, context_instance=RequestContext(request))
+
+def deletedownsize(request, downsize_id):
+    user = request.user
+    downsize = get_object_or_404(Downsize, pk=downsize_id)
+    goal = downsize.goal
+    goal.current_savings -= downsize.downsize_amount
+    goal.progress = goal.current_savings / goal.savings_goal
+    goal.save()
+    downsize.delete()
+    return HttpResponseRedirect('../../../dashboard')
+
+def donate(request, user_id):
+    return HttpResponse("You're  looking at user %s donation." % user_id)

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block headextra %}
+	<title>Downsize | Account Settings</title>
+   
+	<style type="text/css">
+   
+	h1 { 
+		padding-top: 10px;
+		border: none;
+		padding-bottom: 0;
+		margin-bottom: 10px;
+		text-align: center;
+	}
+   
+	#middlecontent {
+		margin-left: 325px;
+		margin-bottom: 20px;
+	}
+	
+	#settingsmenu {
+		border: 1px solid #BBB;
+		padding: 30px;
+		padding-top: 10px;
+	}
+	
+	#savechanges {
+		margin-left: 125px;
+	}
+    
+    form p {
+        line-height: 2em;
+    }
+   
+	</style>
+{% endblock %}
+
+{% block middlecontent %}
+
+<h1>Account Settings</h1>
+<form action="/account/preferences/" method="post" id="settingsmenu">
+{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Save Changes" id="savechanges"/>
+</form>
+
+{% endblock %}

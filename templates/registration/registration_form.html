@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block headextra %}
+   <title>Downsize | Create Account</title>
+   
+   <style type="text/css">
+   
+   #navigation { display: none; }
+   
+   h1 { 
+		padding-top: 10px;
+		border: none;
+		padding-bottom: 0;
+		text-align: left;
+		margin-left: 30px;
+	}
+
+	#content { background-color: transparent; }
+		
+	#middlecontent { 
+		margin-left: 300px;
+		background-color: white;
+		margin-top: 30px;
+		width: 350px;
+        padding-bottom: 20px;
+	}
+	
+	#createmenu {
+		padding-top: 0;
+		margin: 30px;
+		margin-bottom: 10px;
+		margin-top: 10px;
+	}
+	
+	#submit {
+		margin-left: 225px;
+	}
+
+	#login { 
+		padding-top: 10px 30px 10px 0;
+		font-size: 75%;
+		text-align: right;
+		margin-right: 30px;
+		margin-bottom: 30px;
+	}
+	
+	#disclaimer {
+		margin-left: 30px;
+        margin-right: 30px;
+		font-size: 75%;
+	}
+    
+    form { padding-right: 20px;}
+    
+    form p {
+        line-height: 2.5em;
+    }
+	
+   </style>
+{% endblock %}
+   
+{% load i18n %}
+
+{% block middlecontent %}
+<h1>Create Account</h1>
+<form method="post" action="." id="createmenu">
+  {{ form.as_p }}
+
+  <input type="submit" value="{% trans 'Sign Up' %}" id="submit"/>
+</form>
+<div id="login"><a href="{% url auth_login %}">{% trans "Already have an account? Log in" %}</a></div>
+<div id="disclaimer"><p>By clicking Sign Up, you are agreeing to the <a href="" id="tos">Terms of Service</a> and <a href="" id=pp">Privacy Policy</a></p></div>
+{% endblock %}

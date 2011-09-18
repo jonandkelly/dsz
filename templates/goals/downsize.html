@@ -1,0 +1,330 @@
+{% extends "base.html" %}
+
+{% block headextra %}
+<title>Downsize - Downsize It, The Easiest Way to Save</title>
+
+<style type="text/css">
+
+/* workaround to highlight active menu item*/
+ul#nav li.dsmenu a {
+    color: #7CB126;
+    background-color: #EEE;
+}
+
+/*POSSIBLY ELIMINATE*/
+ul {text-align: left;} 
+
+h2 {text-align: left;}
+/*END*/
+
+#topcontent { text-align: left;}
+
+#leftcontent, #rightcontent {
+	width: 460px;
+	margin-top: 0px;
+}
+
+#recordds {
+    position: relative;
+    background-color: #004;
+    color: white;
+    margin: 30px 0;
+    padding: 10px;
+    height: 110px;
+}
+
+#recordds h1 {
+    border: none;
+    color: white;
+    margin-bottom: 10px;
+}
+
+#recordds a {
+    color: white;
+}
+
+#recordds p {
+    float: left;
+    padding: 0;
+    margin-left: 20px;
+    margin-bottom: 0;
+}
+
+#newdslink {
+    clear: left;
+    width: 300px;
+    padding-left: 70px;
+    font-size: 75%;
+}
+
+#recordds input {
+    float: right;
+}
+
+#intro {
+    float: left;
+    width: 450px;
+    height: 150px;
+}
+
+#intro p {
+    padding-top: 0px;
+    margin-top: 0;
+}
+
+#intro h2 {
+    margin-bottom: 5px;
+}
+
+#appbox {
+    position: relative;
+    margin-left: 30px;
+    float: left;
+    width: 450px;
+    background-color: #DDD;
+    border: 1px solid;
+    height: 150px;
+}
+
+#appboxheader {
+    width: 310px;
+}
+
+#appbox h1 {
+    border: none;
+    padding-left: 10px;
+    padding-top: 10px;
+    margin-bottom: 5px;
+    padding-right: 0;
+    margin-right: 0;
+}
+
+#appbox p, #appbox h2 {
+    clear: left;
+    width: 275px;
+    float: left;
+    padding-left: 10px;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+#appboximg {
+    width: 125px;
+    position: absolute;
+    right: 10px;
+    top: 12px;
+}
+
+#introappcontainer { 
+    width: 100%; 
+    height: 152px;
+}
+
+#catmenucontainer {
+    clear: both;
+    height: 100px;
+    margin: 50px 0 25px;
+    width: 100%;
+    border-bottom: 1px solid #AAA;
+}
+
+.catmenu {
+    float: left;
+    margin-right: 0px;
+}
+
+.catmenu a {
+    display: block;
+    float: left;
+    width: 85px;
+    height: 99px;
+    text-decoration: none;
+}
+
+.catmenu p {
+    clear: left;
+    font-size: 75%;
+    padding: 0;
+    margin: 5px 0px 0 0;
+    color: black;
+    font-style: normal;
+    font-weight: normal;
+    border: none;
+    text-align: center;
+}
+
+.catmenu img {
+    margin-left: 5px;
+}
+
+#catmenulist {
+    list-style-type: none;
+    margin-left: 1px;
+    padding-left: 0;
+}
+
+.dssuggestions h2 {
+    border-bottom: 1px solid #CCC;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    color: #7CB126;
+    text-align: center;
+}
+
+.dssuggestions a {
+    display: block;
+    color: black;
+    border: 1px solid #CCC;
+    padding: 5px 10px;
+    text-decoration: none;
+}
+
+.dssuggestions ul {
+    padding-left: 0px;
+    margin-top: 0;
+}
+
+.dssuggestions li {
+    list-style-type: none;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.dssuggestions p {
+    margin: 0;
+}
+
+.dssuggestions .dstitle {
+    font-weight: bold;
+    font-size: 125%;
+}
+
+.dspts {
+    padding-left: 30px;
+    color: #555;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.dsdesc {
+    color: #555;
+}
+
+a:hover.boxlink { 
+	background-color: #EEE;
+    border-bottom: 4px solid #7CB126;
+}
+
+.dssuggestions a:hover.boxlink { 
+    border: 1px solid #CCC;
+}
+
+.dssuggestions a:hover.boxlink .dstitle { 
+    color: #7CB126;
+}
+
+</style>
+
+{% endblock %}
+
+{% block topcontent %}
+
+<div id="recordds">
+    <h1>Record a Downsize</h1>
+    <form action="/goals/downsize/" method="post">
+    {% csrf_token %}
+    <!-- <a href="../newgoal/">Start a New Goal</a> -->
+    {{ form.as_p }}
+    <div id="newdslink"><a href="../newsaving/">Add new one</a></div>
+    <input type="submit" value="Submit" />
+    </form>
+</div>
+
+<div id="introappcontainer">
+<div id="intro">
+    <h1>Easy Ways to Save</h1>
+    <h2>Put the "Save" in Save-and-Give.</h2>
+    <p>We've got a ton of suggestions to help you save money. Click a category below, find something you think would be easy to cut back on, 
+    and click it to add it to your Downsize list. We'll take it from there to help you donate your savings to charity.<br /></p>
+</div>
+<div id="appbox">
+    <div id="appboxheader">
+        <h1>Download the App</h1>
+    </div>
+    <div id="appboximg">
+        <img src="{{MEDIA_URL}}img/app.gif" alt="" width="125" height="125" />
+    </div>
+    <h2>Spontaneous savers:<br />you need this free app!</h2>
+    <p>Save where you want, when you want, on what you want. All in an instant.</p>
+</div>
+</div>
+
+<div id="catmenucontainer">
+<ul id="catmenulist">
+    <li>
+    <div class="catmenu">
+        <a href="" class="boxlink">
+            <img src="{{MEDIA_URL}}img/mostpop.gif" alt="" width="75" height="75" />
+            <p>Most Popular</p>
+        </a>
+    </div>
+    </li>
+    {% for saving_category in saving_category_list %}
+    <li>
+    <div class="catmenu">
+        <a href="{% url goal %}saving/{{ saving_category.id }}/{{ saving_category }}" class="boxlink">
+            <img src="{{ saving_category.image }}" alt="" width="75" height="75" />
+            <p>{{ saving_category }}</p>
+        </a>
+    </div>
+    </li>
+    {% endfor %}
+    <li>
+    <div class="catmenu">
+        <a href="../newsaving/" class="boxlink">
+            <img src="{{MEDIA_URL}}img/add.gif" alt="" width="75" height="75" />
+            <p>Add New One</p>
+        </a>
+    </div>
+    <li>
+</ul>
+</div>
+
+{% endblock %}
+
+{% block leftcontent %}
+
+<div class="dssuggestions">
+    <h2>Our Suggestions</h2>
+    <ul>
+    {% for saving, points in ds_zipped %}
+        <li>
+        <a href="{% url goal %}addsaving/{{ saving.id }}/{{ saving.slug }}/" class="boxlink">
+            <p><span class="dstitle">{{ saving }}</span><span class="dspts">{{ points }}pts</span></p>
+            <p class="dsdesc">{{ saving.description }}</p>
+        </a>
+        </li>   
+    {% endfor %}    
+    </ul>
+</div>
+{% endblock %}
+    
+{% block rightcontent %}
+<div class="dssuggestions">
+    <h2>Crowd Suggestions</h2>
+    <ul>
+    {% for saving, points in crowd_zipped %}
+        <li>
+        <a href="{% url goal %}addsaving/{{ saving.id }}/{{ saving.slug }}/" class="boxlink">
+            <p><span class="dstitle">{{ saving }}</span><span class="dspts">{{ points }}pts</span></p>
+            <p class="dsdesc">{{ saving.description }}</p>
+        </a>
+        </li>   
+    {% endfor %}
+    </ul>
+</div>
+     
+{% endblock %}
+
+
+<!--<span id="addbutton"><form method="link" action="../addsaving/{{ savings.id }}/{{ savings.slug }}/" /><input type="submit" value="Add" /></span> -->

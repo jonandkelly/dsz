@@ -1,0 +1,287 @@
+{% extends "base.html" %}
+
+{% block headextra %}
+<title>Downsize - Easiest Charity Search Ever</title>
+
+<style type="text/css">
+	
+/* workaround to highlight active menu item*/
+ul#nav li.causemenu a {
+	color: #7CB126;
+	background-color: #EEE;
+}
+
+#spotlight {
+	position: relative;
+    height: 400px;
+    margin-top: 30px;
+	text-align: left;
+}
+
+.bigpic {
+	float: left;
+	margin-left: 20px;
+}
+
+#infocontainer {
+	float: left;
+	width: 400px;
+	height: 300px;
+	margin-left: 50px;
+	margin-top: 15px;
+}
+
+#infocontainer p {
+	padding-top: 0;
+	margin-top: 0;
+}
+
+#infocontainer h2 {
+	margin-bottom: 0;
+}
+
+#infocontainer h2 {
+	margin-bottom: 0;
+}
+
+/* bootleg scrolldots */
+ul#scrolldots { 
+	clear: both;
+	width: 940px;
+	text-align: center;
+	padding-top: 0;
+}
+#scrolldots li {
+	width: 20px;
+	display: inline;
+	font-size: 150%;
+}
+
+#charitysearch {
+	clear: left;
+}
+
+#leftcontent, #middlecontent, #rightcontent {
+	width: 310px;
+	height: 370px;
+	margin: 20px 0 0;
+}
+
+#leftcontent, #middlecontent {
+	border-right: 1px solid #BBB;
+}
+
+#leftcontent h2 {
+	display: inline;
+	margin-right: 30px;
+}
+
+#leftcontent ol {
+	margin-right: 10px;
+	list-style-type: none;
+	padding-left: 0;
+}
+
+/*
+.shade {
+	background-color: #EEE;
+}
+*/
+
+#leftcontent li { 
+	line-height: 2em; 
+}
+
+.addlink { 
+	font-size: 75%;
+	float: right;
+}
+
+a.addlink {
+    padding-top: 5px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    line-height: 1.5em;
+}
+
+#middlecontent h2, #rightcontent h2 {
+	padding-top: 0;
+	margin-top: 0;
+	padding-left: 10px;
+}
+
+#middlecontent ul {
+	padding-left: 0;
+	margin-left: 5px;
+}
+
+#middlecontent li {
+	float: left;
+	list-style-type: none;
+	text-align: center;
+	width: 95px;
+	height: 90px;
+	margin: 10px 3px 10px 0;
+	font-size: 75%;
+	padding: 0 0 0 0;
+	margin-left: 0;
+	margin-top: 5px;
+	border: 1px solid #EEE;
+}
+
+#middlecontent a {
+	color: black;
+	display: block;
+	height: 90px;
+	width: 100%;
+	text-decoration: none;
+}
+
+.boxlink p { margin-top: 0;}
+
+a:hover.boxlink {
+	background-color: #EEE;
+    border: none;
+}
+
+a:hover.boxlink p {
+    color: #7CB126;
+}
+    
+.categorypic {
+	padding: 10px 0 5px;
+}
+
+fieldset { 
+    border: none; 
+    padding-bottom: 0;
+}
+
+#rightcontent ol { 
+	margin-top: 0;
+	list-style-type: none; 
+	padding-left: 0;
+}
+
+#rightcontent li { 
+	line-height: 3em; 
+}
+
+a.newbutton {
+    background-color: #f60;
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 10px;
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+}
+
+a:hover.newbutton {
+    background-color: #ffa340;
+}
+
+#submit {
+    float: right;
+    margin-right: 100px;
+}
+
+</style>
+
+{% endblock %}
+
+{% block topcontent %}
+<div id="spotlight">
+	<h1>In the Spotlight</h1>
+	<div id="spotlightcontainer">
+	<img src=" {{ spotlight_charity.image1 }} " alt="" width="450" height="300" class="bigpic"/>
+		<div id="infocontainer">
+			<img src="{{ spotlight_charity.logo }}" alt="Charity Water logo" width="275" height="50" />    
+            <h2>$25 Impact</h2>
+			<p>{{ spotlight_charity.impact }}</p>
+			<h2>Highlighted Campaign</h2>
+			<p>{{ spotlight_charity.highlighted }}</p>
+			<h2>Perks</h2>
+			<p>{{ spotlight_charity.perks}}</p>
+			<a href="{{ spotlight_charity.website }}" target="_blank">Learn More</a>			
+			<a href="./addqueued/{{ spotlight_charity.id }}/" class="newbutton">Add to Roster</a>
+		</div>	
+	</div>
+</div>
+
+<div id="charitysearch">
+<h1>Charity Search</h1>
+</div>
+{% endblock %}
+
+{% block leftcontent %}
+<h2>Top Orgs on DS</h2>
+<select name="orgsorttype" id="toporgselect">
+	<option>All DS</option>
+	<option>Friends Only</option>
+</select>
+{% if ds_charity_list %}
+<ol>
+	{% for charity in ds_charity_list %}
+		<li><a href=" {{ charity.website }} " target="_blank">{{ charity.charity_name }}</a> (<span class="dspts">{{ charity.points_raised }}</span>)<a href="./addqueued/{{ charity.id }}/" class="addlink">add</a></li>
+	{% endfor %}
+</ol>
+{% else %}
+	<p>No charities available.</p>
+{% endif %}
+
+{% endblock %}
+
+{% block middlecontent %}
+<h2>Categories</h2>
+
+{% if category_list %}
+	<ul id="categorylist">
+	{% for category in category_list %}
+		<li>
+			<a href="./causes/category/{{ category.id }}/{{ category.slug }}/" class="boxlink">
+				<div class="categorypic">
+					<img src="{{ category.cause_category_image }}" alt="placeholder" width="55" height="55" />
+				</div>
+				<div class="categoryname">
+					<p>{{ category.cause_category }}</p>
+				</div>
+			</a>
+		</li>
+	{% endfor %}
+	</ul>
+{% else %}
+	<p>No categories are available.</p>
+{% endif %}
+
+{% endblock %}
+
+{% block rightcontent %}
+<h2>Advanced Search</h2>
+<form action="" method="get">
+<fieldset>
+	<ol>
+		<li>Org Name <input type="text" name="name" /></li>
+		<li>Location <input type="text" name="location" value="City and State, or Zip" /></li>
+		<li>DS-verified<input type="checkbox" name="dsverified" /></li>
+		<li>
+            <label for="categorymenu">Category</label>
+            <select name="category" id="categorymenu">
+				<option>Animals</option>
+				<option>Arts/Culture</option>
+				<option>Education</option>
+				<option>Environment</option>
+				<option>Health</option>
+				<option>Human Services</option>
+				<option>International</option>
+				<option>Public Benefit</option>
+				<option>Religion</option>
+			</select>
+        </li>
+	</ol>   
+</fieldset>
+<input type="submit" value="Submit" id="submit" />
+</form>
+
+{% endblock %}

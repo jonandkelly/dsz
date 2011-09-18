@@ -1,0 +1,65 @@
+from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from myproject.charities.models import Charity
+
+class Trophy(models.Model):
+    award = models.CharField(max_length=50)
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
+    ds_points = models.IntegerField(verbose_name="DS Points", default=0)
+    baller_status = models.CharField(max_length=10, verbose_name="Baller Status", default='User')
+    trophy_case = models.ManyToManyField(Trophy, verbose_name="Trophy Case", default=None)
+    charities = models.ManyToManyField(Charity, through='CharityRelationship', verbose_name="Favorite Charities", default=None)
+    def __unicode__(self):
+        return self.user.username
+
+
+def ensure_profile_exists(sender, **kwargs):
+    if kwargs.get('created', False):
+        UserProfile.objects.create(user=kwargs.get('instance'))
+
+post_save.connect(ensure_profile_exists, sender=User)
+
+class CharityRelationship(models.Model):
+    userprofile = models.ForeignKey(UserProfile)
+    charity = models.ForeignKey(Charity)
+    favorite = models.BooleanField()
+    queued = models.BooleanField()
+    donated = models.BooleanField()
+
+class Preferences(models.Model):
+    user = models.OneToOneField(User)
+    CHECKIN_FREQUENCY_CHOICES = (
+        (u'daily', u'Daily'),
+        (u'weekly', u'Weekly'),
+    )
+    checkin_frequency = models.CharField(max_length=6, choices=CHECKIN_FREQUENCY_CHOICES, verbose_name="Check In Frequency", default='daily')
+    facebook = models.BooleanField(default=True)
+    twitter = models.BooleanField(default=True)
+    downsize = models.BooleanField(default=True)
+    new_goal = models.BooleanField(verbose_name="New Goal", default=True)
+    goal_achieved = models.BooleanField(verbose_name="Goal Achieved", default=True)
+    saving_summary = models.BooleanField(verbose_name="Monthly Savings Summary", default=True)
+    on_spot_downsize = models.BooleanField(verbose_name="On-the-Spot Downsizes", default=True)
+    PRIVACY_WHO_CHOICES = (
+        (u'friends', u'Friends'),
+        (u'friendsfriends', u'Friends of Friends'),
+        (u'alldownsize', u'All of Downsize'),
+    )
+    privacy_who = models.CharField(max_length=14, choices=PRIVACY_WHO_CHOICES, default='alldownsize')
+    full_profile = models.BooleanField(verbose_name="Full Profile", default=True)
+    commitments = models.BooleanField(default=True)
+    goals = models.BooleanField(default=True)
+    badges = models.BooleanField(default=True)
+    total_points = models.BooleanField(verbose_name="Total DS Points", default=True)
+    def __unicode_(self):
+        return self.user.username
+
+
+def ensure_preferences_exists(sender, **kwargs):
+    if kwargs.get('created', False):
+        preferences = Preferences.objects.create(user=kwargs.get('instance'))
+
+post_save.connect(ensure_preferences_exists, sender=User)

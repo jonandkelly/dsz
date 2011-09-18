@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block headextra %}
+   <title>Downsize | Save-and-Give Revolution, the Easiest Way to Donate to Charities and Causes</title>
+   
+   <style type="text/css">
+
+    #content {
+        padding-top: 0;
+        padding-left: 0;
+    }
+   
+    #topcontent {
+        background-color: #7CB126;
+        width: 980px;
+        padding: 0;
+        margin: 0;
+    }
+   
+    #leftcontent { 
+        width: 500px; 
+        position: relative;
+    }
+    
+    #rightcontent { 
+        width: 420px; 
+        position: relative;
+    }
+   
+    h1 { 
+        color: white;
+        font-size: 500%;
+        font-weight: normal;
+        margin: 0.5em 0 0.5em;
+        padding-bottom: 0.5em;
+        border: none;
+        text-transform: none;
+        text-align: center;
+    }
+   
+    h2 { 
+        font-size: 200%;
+        padding-top: 0;
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+   
+   p.bigtext { 
+        font-size: 175%;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+   
+    p { 
+        font-size: 125%; 
+        color: #333;
+    }
+   
+    #navigation, #footer { display: none; }
+   
+    a.newbutton {
+        background-color: #f60;
+        color: white;
+        font-weight: bold;
+        position: absolute;
+        border: none;
+        padding: 10px 20px;
+        font-size: 200%;
+    }
+     
+    a:hover.newbutton {
+        background-color: #ffa340;
+    }
+    
+    .smalltext {
+        font-size: 100%;
+        font-style: italic;
+        color: #333;
+        margin-top: 55px;
+        margin-left: 2px;
+    }
+   
+   </style>
+{% endblock %}
+
+<body>
+    {% block topcontent %}
+    <h1>No Money? No Problem.</h1>
+    {% endblock %}
+    <div id="wrapper">
+        {% block leftcontent %}
+        <iframe align="right" title="YouTube video player" width="480" height="385" src="http://www.youtube.com/embed/Yr94zStsk8E?rel=0" frameborder="0" allowfullscreen></iframe>
+        {% endblock %}
+        {% block rightcontent %}
+        <h2>The Save-and-Give Revolution.<br />
+        A better way to donate.</h2><br />
+        <p>Yep, we know. Giving is a pain. Well, it used to be a pain until Downsize came along.  
+        Our formula makes donating money enjoyable, affordable and as easy as buying stuff.<br /><br />
+        <strong>Sign up now if you want to do good the easy way.</strong>
+        <a href="/info/findoutmore/">Find Out More</a></p>
+        <br />
+        <br />
+        <a href="/accounts/register/" class="newbutton">Sign Up</a>
+        <p class="smalltext">of course it's free!</p>
+        {% endblock %}
+        {% block bottomcontent %}
+        <br />
+        <p class="bigtext">Want to start Downsizing?  <a href="/accounts/register/">Click here to join the revolution</a></p>
+        {% endblock %}
+    </div>
+</body>

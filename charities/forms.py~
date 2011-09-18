@@ -1,0 +1,13 @@
+from django import forms
+from django.forms import ModelForm
+from myproject.account.models import CharityRelationship
+
+class CharityRelationshipForm(ModelForm):
+    charity = forms.CharField(max_length=50)
+
+    class Meta:
+        model = CharityRelationship
+        fields = ('favorite', 'queued')
+
+
+

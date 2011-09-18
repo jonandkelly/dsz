@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+<body>
+{% block content %}
+   <table>
+   <tr>
+     <th>Charity</th>
+     <th>Favorites</th>
+     <th>Goals Queue</th>
+   </tr>
+   {% for charity_list, fav_list, queued_list in zipped %}
+     <tr>     
+       <td>{{ charity_list.charity_name }}</td>
+       <td><a href="../../../addfavorite/{{ charity.id }}/">{{ fav_list }}</a></td>
+       <td><a href="../../../addqueued/{{ charity.id }}/">{{ queued_list }}</a></td>
+     </tr>   
+   {% endfor %}
+   </table>
+{% endblock %}
+</body>

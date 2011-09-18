@@ -1,0 +1,144 @@
+{% load i18n %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}css/master.css" />
+    <script type="text/javascript" src="http://use.typekit.com/sjm8kim.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+	{% block headextra %}
+	{% endblock %}
+</head>
+
+<body>
+<div id="container">
+{% block container %}
+    
+<div id="wrapper">
+	<div id="header">
+	<div id="headercontainer">
+	{% block header %}
+		<div id="logo">
+		{% block logo %}
+			<a href="/" title="Downsize - Home"><img src="{{MEDIA_URL}}ds_logo.png" alt="Downsize logo" width="212" height="54" /></a>
+		{% endblock %}
+		</div>
+		<div id="headerlinks">
+		{% if user.is_authenticated %}
+			<a href="/account/preferences/">{% trans "Settings" %}</a>
+			<a href="">FAQs</a>
+			<a href="">About Us</a>
+			<a href="/goals/dashboard/">{% trans "My Dash" %}</a>
+			<a href="{% url auth_logout %}">{% trans "Log out" %}</a>
+			<div id="greeting"><p>{% trans "Hello," %} {{ user.username }}</p></div>
+			<a href="{% url auth_password_change %}">{% trans "change password" %}</a>
+		{% else %}
+			<a href="{% url auth_login %}" id="headerloginlink">{% trans "Log in" %}</a>
+		{% endif %}
+	{% endblock %}
+		</div>
+	</div>
+	</div>
+	
+    <div id="navigation">
+        {% block navigation %}
+		<ul id="nav">
+			<li class="left homemenu"><a href="/home/" class="menutitle">{% trans "Home" %}<br />
+				<span class="menusubtitle">Do Somethings</a></li>
+			<li class="dashmenu"><a href="/goals/dashboard/" class="menutitle">{% trans "My Dash" %}<br />
+				<span class="menusubtitle">History, Progress, Stats</a></li>
+			<li class="dsmenu"><a href="/goals/downsize/" class="menutitle">{% trans "Downsize It" %}<br />
+				<span class="menusubtitle">Customized Ways to Save</a></li>
+			<li class="causemenu"><a href="/charities/" class="menutitle">{% trans "Charities" %}<br />
+				<span class="menusubtitle">Charity Search Made Easy</a></li>
+			<li class="right crowdmenu"><a href="/networks/" class="menutitle">{% trans "Crowd" %}<br />
+				<span class="menusubtitle">Do It With a Group</a></li>
+		</ul>
+		<div id="trileft"></div>
+		<div id="triright"></div>
+		{% endblock %}
+    </div>
+
+    <div id="content">
+        {% block content %}
+		<div id="topcontent">
+			{% block topcontent %}
+			{% endblock %}
+		</div>
+		<div id="leftcontent">
+			{% block leftcontent %}
+			{% endblock %}
+	    </div>
+		<div id="middlecontent">
+			{% block middlecontent %}
+			{% endblock %}
+		</div>
+	    <div id="rightcontent">
+	        {% block rightcontent %}
+			{% endblock %}
+	    </div>
+		<div id="bottomcontent">
+			{% block bottomcontent %}
+			{% endblock %}
+		</div>
+		{% endblock %}
+    </div>
+    <div id="push"></div>
+</div>
+
+<div id="footer">
+    {% block footer %}
+    <div id="footercontainer">
+        <div class="footercol">
+        <h3>Downsize</h3>
+            <ul>
+                <li><a href="/home/">{% trans "Home" %}</a></li>
+                <li><a href="/goals/dashboard/">{% trans "My Dash" %}</a></li>
+                <li><a href="">Downsize It</a></li>
+                <li><a href="">Charities</a></li>
+                <li><a href="">Crowd</a></li>
+            </ul>
+        </div>
+		
+        <div class="footercol">
+        <h3>Community</h3>
+            <ul>
+                <li><a href="">Blog</a></li>
+                <li><a href="">Facebook</a></li>
+                <li><a href="">Twitter</a></li>
+            </ul>
+        </div>
+		
+        <div class="footercol">
+        <h3>Support</h3>
+            <ul>
+                <li><a href="/account/preferences/">{% trans "Settings" %}</a></li>
+                <li><a href="">FAQs</a></li>
+                <li><a href="">Contact Us</a></li>
+            </ul>
+        </div>
+		
+        <div class="footercol">
+        <h3>About Us</h3>
+            <ul>
+                <li><a href="">Mission</a></li>
+                <li><a href="">Blog</a></li>
+            </ul>
+        </div>
+    
+        <div class="footercol">
+        <h3>&copy; 2011 Downsize</h3>
+            <ul>
+                <li><a href="">Terms of Use</a></li>
+                <li><a href="">Privacy Policy</a></li>
+            </ul>
+        </div>
+    </div>
+    {% endblock %}
+</div>
+{% endblock %}
+</div>
+</body>
+
+</html>

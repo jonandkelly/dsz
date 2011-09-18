@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>New Saving's Type</h2>
+<form action="/goals/newsaving/" method="post">
+{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Save Now!" />
+</form>
+
+{% endblock %}

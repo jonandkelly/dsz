@@ -1,0 +1,7 @@
+{% if charity_list %}
+   {% for charity in charity_list %}
+      {{charity.charity_name}}
+   {% endfor %}
+{% else %}
+   <p>No charities are available.</p>
+{% endif %}

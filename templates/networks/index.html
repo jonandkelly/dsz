@@ -1,0 +1,397 @@
+{% extends "base.html" %}
+
+{% block headextra %}
+<title>Downsize | Crowd, Find Friends, Start a Campaign</title>
+   
+<style type="text/css">
+
+/* workaround to highlight active menu item*/
+ul#nav li.crowdmenu a {
+	color: #7CB126;
+	background-color: #EEE;
+}
+
+#leftcontent {
+    clear: left;
+    float: left;
+    width: 460px;
+}
+
+#rightcontent {
+    float: left;
+    width: 460px;
+}
+
+#campaigncontainer {
+    background-color: #DDD;
+    padding-left: 20px;
+    border: 1px solid #999;
+}
+
+#campaigncontainer h1 {
+    border: none;
+    padding-top: 10px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    font-size: 275%;
+    color: #F60;
+}
+
+#formintro {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #999;
+    margin-right: 20px;
+}
+
+.bigtext {
+    font-size: 200%;
+    padding-right: 4px;
+}
+
+.smalltext {
+    font-size: 60%;
+}
+
+#addcharitylink {
+    margin-left: 10px;
+    font-size: 100%;
+}
+
+fieldset { 
+    border-right: none;
+    border-left: none;
+    border-top: none;
+    border-bottom: 1px solid #999; 
+    padding: 0 10px 10px 0;
+    margin-bottom: 20px;
+    margin-right: 20px;
+}
+
+ol, ul { 
+    list-style-type: none; 
+    padding-left: 0px;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-bottom: 10px;
+}
+
+#charityandname label, legend, #emailcontentheader { 
+    font-weight: bold; 
+    font-size: 90%;
+    padding-bottom: 5px;
+    padding-left: 0;
+}
+
+#form-charity, #form-name, #form-emailcontent { margin-top: 5px;}
+
+#form-charity, #form-name, #form-customds {
+    font-size: 175%;
+}
+
+#form-customds {
+    margin-top: 5px;
+}
+
+#charityandname li { padding-bottom: 0px; }
+
+#optional {
+    font-size: 75%;
+    color: #777;
+}
+
+#selectds p { 
+    margin: 0; 
+    font-size: 75%;
+    font-style: italic;
+    font-weight: bold;
+    color: #777;
+}
+
+fieldset h3 {
+    font-style: italic;
+    font-size: 75%;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 5px;
+    color: #777;
+}
+
+.emailentrycontainer {margin-bottom: 0;}
+
+#buttoncontainer {
+    width: 100%;
+    height: 40px;
+}
+
+.rightbutton {
+    margin-right: 20px;
+    float: right;
+}
+
+#addfriends { margin-bottom: 30px;}
+
+#crew { clear: left; }	
+
+#searchbar { 
+    margin-bottom: 10px;
+}
+
+#sortlinks { 
+    float: right;
+    font-size: 75%;
+    padding-top: 0;
+    padding-right: 20px;
+    margin-top: 0;
+}
+
+.crewlist { margin: 0; padding: 0;}
+
+ul.crewlist {
+    padding-top: 10px;
+}
+
+.crewlist li { 
+    margin-bottom: 20px;
+    height: 125px;
+}
+
+.crewpic {
+    float: left;
+    clear: left;
+    margin-right: 10px;
+    height: 125px;
+    width: 125px;
+}
+
+.crewpic a:hover {
+    border: none;
+}
+	
+.crewdetails {
+    position: relative;
+    float: left;
+    width: 300px;
+    font-size: 75%;
+}
+	
+.crewdetails p {
+    margin: 0;
+    padding-top: 0px;
+    font-size: 125%;
+}
+	
+.crewdetails a { 
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.crewname a {
+    font-size: 125%;
+}
+
+.crewrank {
+    font-style: italic;
+}
+
+.crewcharity {
+    font-size: 100%;
+}
+
+p.crewstatus { padding-top: 20px; }
+
+.leftcrewdetails {
+    padding-top: 15px;
+}
+
+.score {
+    width: 80px;
+    position: absolute;
+    top: 15px;
+    left: 220px;
+    text-align: right;
+    font-weight: bold;
+}
+
+.score p {text-align: right;}
+	
+</style>
+{% endblock %}
+
+{% block leftcontent %}
+
+<div id="campaigncontainer">
+    <h1>Campaign Starter</h1>
+    <p id="formintro"><span class="bigtext">Get</span><span class="smalltext"> your charity </span><span class="bigtext">rich quick.</span><br /><br />
+    <span class="campaignsteps">Pick any Charity. Fill out the form. Send it to friends.</span>
+    </p>
+    
+    <form action="" method="post">
+    <fieldset id="charityandname">
+        <ol>
+            <li>
+                <label for="form-charity">Charity</label><br />
+                <select name="charityname" id="form-charity">
+                    <option>Charity Water</option>
+                    <option>Pencils of Promise</option>
+                </select>
+                <a href="../goals/newgoal/" id="addcharitylink">add a new one</a>
+            </li><br />
+            <li>
+                <label for="form-name">Name the campaign <span id="optional">(optional)</span></label><br />
+                <input type="text" name="name" value="Snack-free for Charity Water" size="32" maxlength="100" id="form-name" />
+            </li>
+        </ol>
+    </fieldset>
+    <fieldset id="selectds">
+        <legend>Suggest a Downsize action</legend>
+        <ol>
+            <p>some of your favorites:</p>
+            <li><label><input type="radio" name="downsize" value="coffee" /> Cheap coffee</label></li>
+            <li><label><input type="radio" name="downsize" value="water" /> No bottled water</label></li>
+            <li><label><input type="radio" name="downsize" value="snack" check="checked" /> Snack free</label></li>
+            <p>or:</p>
+            <li><label><input type="radio" name="downsize" value="on-the-spot" /> On-the-spot</label></li>
+            <li><label><input type="radio" name="downsize" value="new" /> New one</label>
+                <input type="text" name="customds" value="" size="23" maxlength="100" id="form-customds" />
+                </li>
+        </ol>
+    </fieldset>
+    <fieldset id="team">
+        <legend>Pick your team</legend>
+        <h3>your crew:</h3>
+        <ul>
+            <li><label><input type="checkbox" name="team" value="" /> Errik Anderson</label></li>
+            <li><label><input type="checkbox" name="team" value="" check="checked" /> Bill Gates</label></li>
+            <li><label><input type="checkbox" name="team" value="" check="checked" /> Kelly Hackett</label></li>
+            <li><label><input type="checkbox" name="team" value="" /> Hans Reichstetter</label></li>
+            <li><label><input type="checkbox" name="team" value="" check="checked" /> Gregg Rubin</label></li>
+            <li><label><input type="checkbox" name="team" value="" check="checked" /> Jon Sheller</label></li>
+        </ul><br />
+        <h3>invite others:</h3>
+        <img src="{{MEDIA_URL}}img/facebook-connect.png" alt="" width="130" height="41" />
+        <p class="emailentrycontainer"><textarea name="emailentry" rows="2" cols="48" id="form-newcontactscampaign">enter email addresses separated by commas</textarea><br />
+        <a href="">import contacts from address book</a></p><br />
+    </fieldset>
+    <p><label for="form-emailcontent" id="emailcontentheader">Say something to them</label><br />
+        <textarea name="email_body" rows="10" cols="50" id="form-emailcontent">
+        Folks,
+        Easiest charity fundraiser ever. I want you to join a new Downsize campaign called Snack-Free for Charity Water.
+        The idea is that you make a small change in your spending habits, save a little dough, and then donate the savings 
+        to a good cause. Once you've saved $25, you're done (unless you want to keep saving and giving). Your $25 
+        donation will allow Charity Water to give clean water to one person for 25 years. Pretty sweet. Get onboard!
+    </textarea></p>
+    <p id="buttoncontainer"><input type="submit" value="Send" class="rightbutton" /></p>
+    </form>
+</div>
+
+{% endblock %}
+
+{% block rightcontent %}
+
+<div id="addfriends">
+    <h1>Find Your Friends</h1>
+    <img src="{{MEDIA_URL}}img/facebook-connect.png" alt="" width="130" height="41" />
+    <form>
+        <p class="emailentrycontainer"><textarea name="emailentry" rows="2" cols="50" id="form-newcontactsplatform">enter email addresses separated by commas</textarea><br />
+        <a href="">import contacts from address book</a></p>
+    </form>
+</div>
+<div id="crew">
+    <h1>Your Crew</h1>
+    <div id="sortlinks">
+        <p>sort: <a href="">name</a> | <a href="">points</a></p>
+    </div>
+    <div id="searchbar">
+        <form>
+            <input type="text" name="networksearch" value="search friend name" size="30" id="form-friendfinder" />
+        </form>
+    </div>
+    <ul class="crewlist">
+        <li>
+			<div class="crewpic">
+				<a href=""><img src="{{MEDIA_URL}}img/avatar1.jpg" alt="placeholder pic" width="125" height="125" /></a>
+			</div>
+			<div class="crewdetails">
+				<div class="leftcrewdetails">
+                    <p class="crewname"><a href="">Bill <span class="lastname">Gates</span></a></p>
+                    <p class="crewrank">Newb</p>
+                    <p class="crewstatus">Downsized Powerpoint for</p>
+                    <p><a href="" class="crewcharity">Gates Foundation</a></p>
+                </div>
+                <div class="score"><p><span class="scorenum">25</span>pts</p></div>
+			</div>
+		</li>
+        <li>
+			<div class="crewpic">
+				<a href=""><img src="{{MEDIA_URL}}img/avatar2.png" alt="placeholder pic" width="125" height="125" /></a>
+			</div>
+			<div class="crewdetails">
+                <div class="leftcrewdetails">
+                    <p class="crewname"><a href="">Errik <span class="lastname">Anderson</span></a></p>
+                    <p class="crewrank">Downsize OG</p>
+                    <p class="crewstatus">Downsized wine for</p>
+                    <p><a href="" class="crewcharity">Charity Water</a></p>
+                </div>
+                <div class="score"><p><span class="scorenum">45000</span>pts</p></div>
+			</div>
+		</li>
+        <li>
+			<div class="crewpic">
+				<a href=""><img src="{{MEDIA_URL}}img/avatar3.jpg" alt="placeholder pic" width="125" height="125" /></a>
+			</div>
+			<div class="crewdetails">
+                <div class="leftcrewdetails">
+                    <p class="crewname"><a href="">Gregg <span class="lastname">Rubin</span></a></p>
+                    <p class="crewrank">Ambassador</p>
+                    <p class="crewstatus">Downsized a quad-core for</p>
+                    <p><a href="" class="crewcharity">Shakeweights for the Poor</a></p>
+                </div>
+                <div class="score"><p><span class="scorenum">635</span>pts</p></div>
+            </div>
+		</li>
+        <li>
+			<div class="crewpic">
+				<a href=""><img src="{{MEDIA_URL}}img/avatar1.jpg" alt="placeholder pic" width="125" height="125" /></a>
+			</div>
+			<div class="crewdetails">
+                <div class="leftcrewdetails">
+                    <p class="crewname"><a href="">Hans <span class="lastname">Reichstetter</span></a></p>
+                    <p class="crewrank">Super User</p>
+                    <p class="crewstatus">Downsized a cab for</p>
+                    <p><a href="" class="crewcharity">Pencils of Promise</a></p>
+                </div>
+                <div class="score"><p><span class="scorenum">348</span>pts</p></div>
+            </div>
+		</li>
+        <li>
+			<div class="crewpic">
+				<a href=""><img src="{{MEDIA_URL}}img/avatar2.png" alt="placeholder pic" width="125" height="125" /></a>
+			</div>
+			<div class="crewdetails">
+                <div class="leftcrewdetails">
+                    <p class="crewname"><a href="">Jon <span class="lastname">Sheller</span></a></p>
+                    <p class="crewrank">Ambassador</p>
+                    <p class="crewstatus">Downsized Kelly's Christmas present for</p>
+                    <p><a href="" class="crewcharity">freekelly.org</a></p>
+                </div>
+                <div class="score"><p><span class="scorenum">635</span>pts</p></div>
+            </div>
+		</li>        
+        <li>
+			<div class="crewpic">
+				<a href=""><img src="{{MEDIA_URL}}img/avatar3.jpg" alt="placeholder pic" width="125" height="125" /></a>
+			</div>
+			<div class="crewdetails">
+                <div class="leftcrewdetails">
+                    <p class="crewname"><a href="">Kelly <span class="lastname">Hackett</span></a></p>
+                    <p class="crewrank">Ambassador</p>
+                    <p class="crewstatus">Downsized paying for lunch for</p>
+                    <p><a href="" class="crewcharity">parthenon.org</a></p>
+                </div>
+                <div class="score"><p><span class="scorenum">635</span>pts</p></div>
+			</div>
+		</li>
+    </ul>
+</div>
+
+{% endblock %}

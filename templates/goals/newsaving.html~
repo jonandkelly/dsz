@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<h2>New Saving's Type</h2>
+<form action="/campaigns/newsaving/" method="post">
+{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Save Now!" />
+</form>
+
+{% endblock %}

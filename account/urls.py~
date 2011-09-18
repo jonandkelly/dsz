@@ -1,0 +1,28 @@
+
+from django.conf.urls.defaults import *
+
+# Uncomment the next two lines to enable the admin:
+from django.contrib import admin
+admin.autodiscover()
+
+urlpatterns = patterns('',
+    # Example:
+    # (r'^downsize/', include('downsize.foo.urls')),
+
+    (r'^summary/(?P<campaign_id>\d+)/$', 'myproject.campaigns.views.summary'),
+    (r'^dashboard/$', 'myproject.campaigns.views.dashboard'),
+    (r'^newcampaign/$', 'myproject.campaigns.views.newcampaign'),
+    (r'^newsaving/$', 'myproject.campaigns.views.newsaving'),
+    (r'^newcharity/$', 'myproject.campaigns.views.newcharity'),
+    (r'^downsize/$', 'myproject.campaigns.views.downsize'),
+    (r'^downsize/edit/(?P<downsize_id>\d+)/$', 'myproject.campaigns.views.editdownsize'),
+    (r'^downsize/delete/(?P<downsize_id>\d+)/$', 'myproject.campaigns.views.deletedownsize'),
+    (r'^donate/$', 'myproject.campaigns.views.donate'),
+
+    # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
+    # to INSTALLED_APPS to enable admin documentation:
+    (r'^admin/doc/', include('django.contrib.admindocs.urls')),
+
+    # Uncomment the next line to enable the admin:
+    (r'^admin/', include(admin.site.urls)),
+)

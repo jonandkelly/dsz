@@ -1,0 +1,38 @@
+from django.db import models
+from django.contrib.auth.models import User
+
+class Cause(models.Model):
+    cause = models.CharField("Cause", max_length=50)
+
+    class Meta:
+        ordering = ["cause"]
+
+    def __unicode__(self):
+        return self.cause
+
+class CauseCategory(models.Model):
+    cause_category = models.CharField("Category", max_length=20)
+
+    class Meta:
+        ordering = ['cause_category']
+
+    def __unicode__(self):
+        return self.cause_category
+
+class Charity(models.Model):
+    cause_categories = models.ManyToManyField(CauseCategory)
+    causes = models.ManyToManyField(Cause)
+    charity_name = models.CharField("Charity Name", max_length=20)
+    city = models.CharField("City", max_length=25)
+    state = models.CharField("State", max_length=2)
+    zip = models.CharField("Zip Code", max_length=5)
+    impact = models.CharField("Impact", max_length=50)
+    perks = models.CharField("Perk", max_length=50)
+    ds_verified = models.BooleanField("DS-Verified")
+
+    class Meta:
+        ordering = ['charity_name']
+
+    def __unicode__(self):
+        return self.charity_name
+

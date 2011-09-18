@@ -1,0 +1,28 @@
+# File types #
+##############
+
+*.pyc
+*.swo
+*.swp
+*.swn
+
+#Directories #
+##############
+logs/
+
+# Specific files #
+##################
+
+# leave this in for now
+# ds/settings.py
+
+# OS gnerated files #
+#####################
+
+#JSS doesn't know what these are, so commenting them out for now
+#.DS_Store?
+#ehthumbs.db
+#Icon?
+#Thumbs.db
+#*~
+

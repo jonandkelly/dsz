@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<h2>Edit Downsize</h2>
+<form action="/campaigns/downsize/edit/{{ downsize_id }}/" method="post">
+{% csrf_token %}
+<a href="../newcampaign/">Start a New Campaign</a>
+<a href="../newsaving/">Pick a New Type of Savings</a>
+{{ form.as_p }}
+<input type="submit" value="Edit Downsize" />
+</form>
+
+{% endblock %}

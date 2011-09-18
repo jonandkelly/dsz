@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+
+<h2>Campaign Summary {{ campaign.charity_name }}</h2>
+<u1>
+<table border="">
+<tr>
+<th>Downsize Date</th>
+<th>Downsize Amount</th>
+</tr>
+{% for downsize in campaign.downsize_set.all %}
+   <tr>
+   <td>{{ downsize.downsize_date }}</td>
+   <td>{{ downsize.downsize_amount }}</td>
+   </tr>
+{% endfor %}
+</table>
+</u1>
+
+{% endblock %}

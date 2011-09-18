@@ -1,0 +1,31 @@
+from django.forms import ModelForm
+from django.db.models import Q
+from django.forms.extras.widgets import SelectDateWidget
+from myproject.goals.models import Goal
+from myproject.goals.models import Downsize
+from myproject.goals.models import Saving
+from myproject.charities.models import Charity
+
+class SavingForm(ModelForm):
+
+    class Meta:
+        model = Saving
+
+
+class GoalForm(ModelForm):
+    def __init__(self,user,*args,**kwargs):
+        super (GoalForm,self).__init__(*args,**kwargs)
+        self.fields['charity'].queryset = Charity.objects.filter(Q(charityrelationship__userprofile=user.userprofile) & Q(charityrelationship__favorite=True) | Q(charityrelationship__queued=True) | Q(charityrelationship__donated=True))
+
+    class Meta:
+        model = Goal
+        fields = ('charity',)
+
+class DownsizeForm(ModelForm):
+
+    class Meta:
+        model = Downsize
+        exclude = ('goal',)
+        widgets = {
+            'downsize_date': SelectDateWidget(),
+        }

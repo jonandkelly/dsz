@@ -1,0 +1,18 @@
+from django.forms import ModelForm
+from myproject.account.models import CharityRelationship
+from myproject.account.models import Preferences
+
+class CharityRelationshipForm(ModelForm):
+    charity = forms.CharField(max_length=50)
+
+    class Meta:
+        model = CharityRelationship
+        fields = ('charity', 'favorite', 'queued')
+
+class PreferencesForm(ModelForm):
+
+    class Meta:
+        model = Preferences
+        exclude = ('user',)
+
+

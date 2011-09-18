@@ -1,0 +1,57 @@
+from django.db import models
+from django.contrib.auth.models import User
+from myproject.charities.models import Charity
+import datetime
+
+
+class Saving(models.Model):
+    saving_type = models.CharField("Type of Savings", max_length=20)
+    def __unicode__(self):
+        return self.saving_type
+
+class Downsize(models.Model):
+        saving = models.ForeignKey(Saving, verbose_name="Saving")
+        downsize_date = models.DateField("Downsize Date")
+        downsize_amount = models.DecimalField("Downsize Amount", max_digits=100, decimal_places=2)
+        def __unicode__(self):
+            return self.saving.saving_type
+
+class Goal(models.Model):
+    user = models.ForeignKey(User, verbose_name="User")
+    queue_order = models.IntegerField("Queue Order", default=0)
+    #goal_name = models.CharField("Goal Name", max_length=50)
+    charity = models.ForeignKey(Charity, verbose_name="Charity")
+    start_date = models.DateTimeField("Start Date", null=True, blank=True)
+    savings_goal = models.DecimalField("Savings Goal", max_digits=100, decimal_places=2, default=25)
+    current_savings = models.DecimalField("Current Savings", max_digits=100, decimal_places=2, default=0)
+    downsizes = models.ManyToManyField(Downsize, verbose_name="Downsize", null=True, blank=True)
+    days = models.IntegerField("Days Passed", default=0)
+    progress = models.DecimalField("Progress", max_digits=3, decimal_places=2, default=0)
+    def __unicode__(self):
+        return self.charity.charity_name
+
+    class Meta:
+        ordering = ['queue_order']
+
+def UpdateGoalFromDownsize(goal, downsize, amount, num_goals_completed):
+    goal.downsizes.add(downsize)
+    if goal.progress == 0:
+        goal.start_date = datetime.datetime.now()
+    if amount < goal.savings_goal - goal.current_savings:
+        goal.current_savings += amount
+        amount = 0
+        goal.progress = goal.current_savings / goal.savings_goal
+    else:
+        amount -= goal.savings_goal - goal.current_savings
+        goal.current_savings = goal.savings_goal
+        goal.progress = 1
+        goal.days = datetime.datetime.now() - goal.start_date
+        goal.queue_order = 0
+        num_goals_completed += 1
+    goal.save()
+    return (amount, num_goals_completed)
+
+def UpdateQueueOrder(goal_list, queue_decrement):
+    for goal in goal_list:
+        goal.queue_order -= queue_decrement
+        goal.save()

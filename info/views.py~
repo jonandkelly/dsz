@@ -1,0 +1,10 @@
+from django.shortcuts import render_to_response, get_object_or_404
+
+def findoutmore(request):
+    user = request.user
+    return render_to_response('info/findoutmore.html', {'user': user})
+
+def takeatour(request):
+    user = request.user
+    return render_to_response('info/takeatour.html', {'user': user})
+

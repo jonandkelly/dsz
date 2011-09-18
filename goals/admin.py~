@@ -1,0 +1,7 @@
+from django.contrib import admin
+from myproject.goals.models import Saving, Cause, Goal, Downsize
+
+admin.site.register(Saving)
+admin.site.register(Cause)
+admin.site.register(Goal)
+admin.site.register(Downsize)

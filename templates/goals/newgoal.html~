@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<h2>New Goal</h2>
+<form action="/goals/newcampaign/" method="post">
+{% csrf_token %}
+<a href="../../charities/newcharity/">Pick a New Charity</a>
+{{ form.as_p }}
+<input type="submit" value="Start Now!" />
+</form>
+
+{% endblock %}

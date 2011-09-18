@@ -1,0 +1,426 @@
+{% extends "base.html" %}
+
+{% block headextra %}
+<title>Downsize | Home - Do Something</title>
+   
+<style type="text/css">
+   
+/* workaround to highlight active menu item */
+ul#nav li.homemenu a {
+	color: #7CB126;
+	background-color: #EEE;
+	}
+    
+#trophycase, #score {
+    display: none;
+}
+
+.trophyname {
+	clear: left;
+	font-size: 75%;
+}
+	
+.trophylist { margin: 0; padding: 0;}
+	
+.trophylist li {
+	float: left;
+	width: 75px;
+	margin-bottom: 5px;
+	margin-right: 5px;
+	padding: 5px 0;
+	text-align: center;
+}
+	
+.trophylist .trophypic { 
+	margin: 0 10px 5px; 
+	float: left;
+	height: 55px;
+}
+	
+ul { list-style-type: none; }
+
+#score {
+	float: right;
+	min-width: 140px;
+	font-size: 0.75em;
+	padding-right: 50px;
+}
+   
+#scorebox {
+	margin: 30px 20px 10px 0;
+	border: 1px solid;
+	background-color: #CCC;
+	min-width: 110px;
+    height: 110px;
+	text-align: center;
+	padding: 0px 5px 25px 5px;
+}
+	
+#scorebox #scorenum {
+	font-size: 500%;
+	font-weight: bold;
+}
+	
+#scorebox #status {
+	font-size: 1.5em;
+	font-weight: bold;
+	font-style: italic;
+}
+
+#current {
+	position: relative;
+	text-align: left;
+	clear: both;
+	padding: 10px 0;
+	height: 190px;
+	width: 100%;
+	margin-bottom: 0px;
+}
+   
+#currentheader {
+	float: left;
+	width: 100%;
+}
+		
+#currentlogodesc {
+	clear: left;
+	float: left;
+	padding-top: 0px;
+	width: 510px;
+	height: 60px;
+}
+
+#currentlogo {
+	float: left;
+	padding-top: 0px;
+	margin-top: 0;
+	width: 300px;
+	height: 50px;
+}
+
+#currentdesc {
+	float: left;
+	width: 180px;
+	height: 50px;
+	padding: 0px 10px 0 10px;
+	font-weight: bold;
+	margin-right: 0;
+}
+	
+#currentdesc p {
+	font-size: 100%;
+	padding-top: 0;
+	margin: 0;
+}
+
+#currentprogress { 
+	clear: left;
+	padding: 5px 10px 0px 0px;
+	text-align: left;
+	width: 510px;
+	float: left;
+}
+	
+#currentprogress p { 
+	padding: 0;
+	margin: 0;
+}
+	  
+#moredollars { 
+	font-weight: bold;
+	padding-right: 275px;
+	float: right;
+}
+
+p#nextup { 
+	font-style: italic;
+	font-size: 75%;
+	margin-top: 20px;
+}
+
+#recentds {
+	position: absolute;
+	margin-left: 50px;
+	top: 55px;
+	right: 10px;
+	width: 365px;
+	height: 140px;
+}
+
+.dsname {
+	clear: left;
+	font-size: 75%;
+	font-weight: bold;
+	width: 75px;
+	margin-left: 12px;
+}
+	
+#threeds { margin: 0; padding: 0; }
+	
+#threeds li {
+	float: left;
+	width: 100px;
+	height: 120px;
+	margin-top: 25px;
+	margin-bottom: 5px;
+	margin-right: 0px;
+	padding-top: 10px;
+	text-align: center;
+}
+	
+#threeds .dspic { 
+	margin: 0 12px 5px; 
+	float: left;
+	height: 75px;
+}
+
+.campaign {
+	background-color: #0000;
+}
+
+li#next {
+	float: left;
+	width: 30px;
+	height: 70px;
+	margin-top: 30px;
+	font-size: 200%;
+	padding-top: 0;
+	color: #CCC;
+	padding-left: 10px;
+}
+
+li#next a {
+	text-decoration: none;
+	color: #CCC;
+    font-weight: bold;
+    float: right;/*gotta see whether this works to get the arrows to stick on the right side*/
+}
+
+li#next a:hover {
+    color: #7CB126;
+    border: none;
+}
+
+#suggestion h2 { 
+	clear: left;
+	font-size: 125%;
+	margin: 0;
+	padding: 3px 0;
+	background-color: #CCC;
+	font-weight: normal;
+}
+
+#suggestion a {
+    text-decoration: underline;
+    color: blue;
+}
+
+#leftcontent, #rightcontent {
+	width: 460px;
+	margin-top: 20px;
+}
+
+.topbox, .bottombox {
+	position: relative;
+	height: 250px;
+	border: 1px solid;
+}
+
+.bottombox {
+	clear: left;
+	margin-top: 20px;
+}
+
+.topbox h1, .topbox h2, .topbox p, .bottombox h1, .bottombox h2, .bottombox p { 
+	margin: 0; 
+	padding: 10px;
+}
+
+.topbox h1, .bottombox h1 {border: none;}
+
+.topbox h2, .bottombox h2 {
+	font-size: 125%;
+	padding-top: 0;
+}
+
+.topbox a, .bottombox a {
+	color: black;
+	display: block;
+	width: 100%;
+	text-decoration: none;
+	height: 250px;
+}
+
+.lefttext {
+	width: 300px;
+	height: 150px;
+}
+
+.rightimg {
+	position: absolute;
+	top: 100px;
+	left: 300px;
+	width: 125px; 
+	height: 125px;
+}
+
+.more {
+	clear: left;
+	margin-left: 10px;
+	font-weight: bold;
+    color: blue;
+}
+
+a:hover.boxlink { 
+	background-color: #EEE;
+}
+
+</style>
+
+	 <!-- jsProgressBarHandler prerequisites : prototype.js -->
+	<script type="text/javascript" src="{{MEDIA_URL}}js/prototype.js"></script>
+
+	<!-- jsProgressBarHandler core -->
+
+	<script type="text/javascript" src="{{MEDIA_URL}}js/jsProgressBarHandler.js"></script>
+
+{% endblock %}
+
+{% block topcontent %}
+
+	<div id="trophycase">
+		<ul class="trophylist">
+    {% for trophy in trophy_case %}
+		<li>
+			<div class="trophypic">
+				<img src="{{MEDIA_URL}}img/imageplaceholder55x55.jpg" alt="placeholder" width="55" height="55" />
+			</div>
+			<div class="trophyname">
+				<p>{{ trophy.award }}</p>
+			</div>
+		</li>
+    {% endfor %}
+		</ul>
+	</div>
+	<div id="score">
+		<div id="scorebox">
+			<p><span id="scorenum"> {{ user.userprofile.ds_points }}</span>pts</p>
+			<p><span id="status"> {{ user.userprofile.baller_status }}</span></p>
+		</div>	
+	</div>
+	<div id="current">
+		<div id="currentheader">
+			<h1>Current Action</h1>
+		</div>
+     {% if current_goal == None %}
+        <div id="currentlogodesc">
+			<img src="{{MEDIA_URL}}img/charity-water-logo.png" id="currentlogo" alt="Charity Water logo" width="275" height="50" />
+			<span id="currentdesc"><p>Clean water for 25 years for one person</p></span>
+		</div>
+		<div id="currentprogress">
+			 <img src="{{MEDIA_URL}}img/Progress bar.graphic.png" alt="progress bar" width="198" height="21" />
+			<span id="moredollars"><p>$6 more</p></span>
+     {% else %}
+		<div id="currentlogodesc">
+			<img src="{{ current_goal.charity.logo }}" id="currentlogo" alt="Charity Water logo" width="275" height="50" />
+			<span id="currentdesc"><p> {{ current_goal.charity.impact }} </p></span>
+		</div>
+		<div id="currentprogress">
+			<span class="progressBar" id="myElementId"> {% widthratio  current_goal_progress 1 100 %} </span>
+			<span id="moredollars"><p>${{ current_goal_remaining }} remaining</p></span>            
+     {% endif %}              
+			<p id="nextup">Next Up: {{ next_goal }} </p>
+		</div>
+		<div id="recentds">
+			<ul id="threeds">
+				{% for downsize in recent_downsize_list %}
+                <li class="campaign">
+					<div class="dsname">
+						<p> {{ downsize }} </p>
+					</div>
+                    {% endfor %}
+				</li>
+				<li id="next">
+					<a href="/goals/dashboard/">>></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div id="suggestion">
+		<h2>For a quick win and some cyber cred: <a href="/account/preferences/">Show your profile some love</a></h2>
+	</div>
+
+{% endblock %}
+
+{% block leftcontent %}
+
+	<div class="topbox">
+		<a href="/charities/" class="boxlink">	
+				<h1>Charity Search</h1>
+				<h2>Find any charity.<br />
+				Discover new ones the easy way.</h2>
+			<div class="lefttext">					
+				<p>This is the greatest charity search tool...ever. Find any charity you know.  
+				Or let us help you find a new one quickly. It will be the easiest research you&apos;ve 
+				done in a while. 
+				<div class="more" href="">Check it out!</div></p>
+			</div>
+			<div class="rightimg">
+				<img src="{{MEDIA_URL}}img/imageplaceholder125x125.jpg" alt="" width="125" height="125" />
+			</div>
+		</a>
+	</div>
+	<div class="bottombox">
+		<a href="/networks/" class="boxlink">	
+				<h1>Crowd</h1>
+				<h2>Science says social stuff makes us happy.<br />
+				So invite friends and be happy.</h2>
+			<div class="lefttext">					
+				<p>See who your friends are giving to, what they&apos;re downsizing, or join one 
+				of their campaigns. Better yet, start your own thing. 
+				<div class="more" href="">Check it out!</div></p>
+			</div>
+			<div class="rightimg">
+				<img src="{{MEDIA_URL}}img/imageplaceholder125x125.jpg" alt="" width="125" height="125" />
+			</div>
+		</a>
+	</div>
+
+{% endblock %}
+
+{% block rightcontent %}
+
+	<div class="topbox">
+		<a href="/goals/downsize/" class="boxlink">	
+				<h1>Downsize It</h1>
+				<h2>The Save and Give Revolution.<br />
+				Do good and leave your bank account intact.</h2>                
+			<div class="lefttext">					
+				<p>Customized savings plans tailored for you. Duels, challenges and 
+				awards make it fun.  Best of all, you reach your giving goals without 
+				getting poorer. 
+				<div class="more" href="">Check it out!</div></p>
+			</div>
+			<div class="rightimg">
+				<img src="{{MEDIA_URL}}img/imageplaceholder125x125.jpg" alt="" width="125" height="125" />
+			</div>
+		</a>
+	</div>
+	<div class="bottombox">
+		<a href="/goals/dashboard/" class="boxlink">	
+				<h1>Dashboard</h1>
+				<h2>Your giving history in one place.<br />
+				One form for tax time, plus analytics.</h2>
+			<div class="lefttext">					
+				<p>No more scrambling at tax time to collect receipts.  
+				Pretty pictures let you analyze your giving history. 
+				Plus, track your past and future DS plans. 
+				<div class="more" href="">Check it out!</div></p>
+			</div>
+			<div class="rightimg">
+				<img src="{{MEDIA_URL}}img/imageplaceholder125x125.jpg" alt="" width="125" height="125" />
+			</div>
+		</a>
+	</div>
+
+{% endblock %}

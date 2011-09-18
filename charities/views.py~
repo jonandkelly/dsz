@@ -1,0 +1,86 @@
+from django.shortcuts import render_to_response, get_object_or_404
+from django.template import RequestContext
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+#from django.form.formsets import formset_factory
+from myproject.account.models import CharityRelationship
+from myproject.charities.models import Charity, CauseCategory
+from myproject.charities.forms import CharityRelationshipForm
+from myproject.goals.models import Goal
+
+def index(request):
+    user = request.user
+    category_list = CauseCategory.objects.all()
+    return render_to_response('charities/index.html', {'user': user, 'category_list': category_list}, context_instance=RequestContext(request))
+
+def listbycategory(request, category_name):
+    user = request.user
+    category = CauseCategory.objects.get(cause_category=category_name)
+    charity_list = category.charity_set.all()
+    fav_list = []
+    queued_list = []
+    if len(charity_list) > 0:
+        for index, charity in enumerate(charity_list):
+            try:
+                relationship = CharityRelationship.objects.get(userprofile=user.userprofile,charity=charity_list[index])
+            except:
+                fav_list.append("Add")
+                queued_list.append("Add")
+            else:
+                if relationship.favorite == True:
+                    fav_list.append("Remove")
+                else:
+                    fav_list.append("Add")
+                if relationship.queued == True:
+                    queued_list.append("Remove")
+                else:
+                    queued_list.append("Add")
+    zipped = zip(charity_list, fav_list, queued_list)
+    return render_to_response('charities/listbycategory.html', {'user': user, 'category': category, 'zipped': zipped}, context_instance=RequestContext(request))
+
+def addfavorite(request, charity_id):
+    user = request.user
+    userprofile=user.userprofile
+    charity = get_object_or_404(Charity, pk=charity_id)
+    try:
+        relationship = CharityRelationship.objects.get(userprofile=userprofile, charity=charity)
+    except:
+        CharityRelationship.objects.create(userprofile=userprofile, charity=charity, favorite=True, queued=False, donated=False)
+    else:
+        relationship.favorite = not relationship.favorite
+        relationship.save()
+    return HttpResponseRedirect('../../')
+
+def addqueued(request, charity_id):
+    user = request.user
+    userprofile=user.userprofile
+    charity = get_object_or_404(Charity, pk=charity_id)
+    try:
+        relationship = CharityRelationship.objects.get(userprofile=userprofile, charity=charity)
+    except:
+        CharityRelationship.objects.create(userprofile=userprofile, charity=charity, favorite=False, queued=True, donated=False)
+        goal = Goal.objects.create(user=user, charity=charity)
+        queued_goals_list = Goal.objects.exclude(progress=1)
+        num_queued = len(queued_goals_list)
+        goal.queue_order = num_queued
+        goal.save()
+    else:
+        if relationship.queued == False:
+            goal = Goal.objects.create(user=user, charity=charity)
+            queued_goals_list = Goal.objects.exclude(progress=1)
+            num_queued = len(queued_goals_list)
+            goal.queue_order = num_queued
+            goal.save()
+        else:
+            goal_list = Goal.objects.filter(user=user, charity=charity, progress=0)
+            for goal in goal_list:
+                goal.delete()
+        relationship.queued = not relationship.queued
+        relationship.save()
+    return HttpResponseRedirect('../../../goals/dashboard')
+
+def newcharity(request):
+    user = request.user
+    return HttpResponseRedirect('../')
+
